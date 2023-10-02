@@ -3,13 +3,15 @@ import java.util.Scanner;
 
 public class GameEngine {
     void run() {
-        // Loop:
-        // 1. user types
-        // 2. opponent plays
-        // 3. compare and report
-        // 4. loop back
         run(new Scanner(System.in), System.out);
     }
+
+    // 1. Loop logic
+    // 2. user input converted to play choice
+        // 3. choice of ai play
+        // 4. compare --> get result
+        // 5. rock beats scissors
+    // 6. reporting results
 
     void run(Scanner scanner, PrintStream out) {
         OpponentAI ai = new OpponentAI();
@@ -20,7 +22,7 @@ public class GameEngine {
                 PlayChoice playChoice = PlayChoice.valueOf(next);
                 PlayChoice aiChoice = ai.play(lastPlay);
                 lastPlay = playChoice;
-                Result result = compare(playChoice, aiChoice);
+                Result result = Result.compare(playChoice, aiChoice);
                 out.printf("You played %s%n", playChoice);
                 out.printf("Opponent played %s%n", aiChoice);
                 out.println(result.getMessage());
@@ -28,11 +30,5 @@ public class GameEngine {
                 out.println("That's not a valid play! Try again.");
             }
         }
-    }
-
-    private Result compare(PlayChoice playChoice, PlayChoice aiChoice) {
-        if (playChoice.beats(aiChoice)) return Result.Win;
-        if (aiChoice.beats(playChoice)) return Result.Lose;
-        return Result.Tie;
     }
 }

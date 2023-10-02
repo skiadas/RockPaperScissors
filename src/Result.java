@@ -15,13 +15,11 @@ public enum Result {
         }
     };
 
-    abstract String getMessage();
-    String getMessage2() {
-        switch (this) {
-            case Lose: return "You lose!";
-            case Win: return "You win!";
-            case Tie: return "It's a tie!";
-        }
-        throw new RuntimeException("Shouldn't get here");
+    static Result compare(PlayChoice player, PlayChoice ai) {
+        if (player.beats(ai)) return Win;
+        if (ai.beats(player)) return Lose;
+        return Tie;
     }
+
+    abstract String getMessage();
 }
