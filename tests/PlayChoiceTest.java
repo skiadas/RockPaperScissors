@@ -23,5 +23,10 @@ public class PlayChoiceTest {
     @Test
     public void testBeatsFalseCases() {
         assertFalse(PlayChoice.Rock.beats(PlayChoice.Paper));
+        assertFalse(PlayChoice.Rock.beats(PlayChoice.Rock));
+        assertFalse(PlayChoice.Paper.beats(PlayChoice.Paper));
+        assertFalse(PlayChoice.Paper.beats(PlayChoice.Scissors));
+        assertFalse(PlayChoice.Scissors.beats(PlayChoice.Scissors));
+        assertFalse(PlayChoice.Scissors.beats(PlayChoice.Rock));
     }
 }

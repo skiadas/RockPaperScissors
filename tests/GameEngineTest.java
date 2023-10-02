@@ -1,4 +1,5 @@
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -8,13 +9,6 @@ import java.util.Scanner;
 import static org.junit.Assert.assertEquals;
 
 public class GameEngineTest {
-
-    private GameEngine engine;
-
-    @Before
-    public void setUp() {
-        engine = new GameEngine();
-    }
 
     @Test
     public void testRunMethodWorks() {
@@ -41,7 +35,7 @@ public class GameEngineTest {
         Scanner scanner = new Scanner(input);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(byteArrayOutputStream);
-        engine.run(scanner, out);
+        new GameEngine(scanner, out).run();
         assertEquals(expected, byteArrayOutputStream.toString());
     }
 }
