@@ -1,5 +1,3 @@
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +33,7 @@ public class GameEngineTest {
         Scanner scanner = new Scanner(input);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(byteArrayOutputStream);
-        new GameEngine(scanner, out).run();
+        new GameEngine(scanner, new Presenter(out)).run();
         assertEquals(expected, byteArrayOutputStream.toString());
     }
 }

@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        new GameEngine(new Scanner(System.in), System.out).run();
+        new GameEngine(new Scanner(System.in), new Presenter(System.out)).run();
     }
 }
 

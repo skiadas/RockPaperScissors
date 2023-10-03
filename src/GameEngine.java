@@ -1,18 +1,17 @@
-import java.io.PrintStream;
 import java.util.Scanner;
 
 public class GameEngine {
 
     private final OpponentAI ai;
     private final Scanner scanner;
-    private final PrintStream out;
+    private final Presenter presenter;
     private PlayChoice lastPlay;
 
-    public GameEngine(Scanner scanner, PrintStream out) {
+    public GameEngine(Scanner scanner, Presenter presenter) {
         ai = new OpponentAI();
         lastPlay = null;
         this.scanner = scanner;
-        this.out = out;
+        this.presenter = presenter;
     }
 
     // 1. Loop logic
@@ -29,25 +28,15 @@ public class GameEngine {
                 PlayChoice playChoice = PlayChoice.valueOf(next);
                 processPlay(playChoice);
             } catch (RuntimeException e) {
-                reportError();
+                presenter.reportError();
             }
         }
-    }
-
-    private void reportError() {
-        out.println("That's not a valid play! Try again.");
     }
 
     void processPlay(PlayChoice playChoice) {
         PlayChoice aiChoice = ai.play(lastPlay);
         lastPlay = playChoice;
         Result result = Result.compare(playChoice, aiChoice);
-        reportResults(playChoice, aiChoice, result);
-    }
-
-    private void reportResults(PlayChoice playChoice, PlayChoice aiChoice, Result result) {
-        out.printf("You played %s%n", playChoice);
-        out.printf("Opponent played %s%n", aiChoice);
-        out.println(result.getMessage());
+        presenter.reportResults(playChoice, aiChoice, result);
     }
 }
