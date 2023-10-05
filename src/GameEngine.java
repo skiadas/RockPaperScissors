@@ -1,16 +1,28 @@
-import java.util.Scanner;
+import java.util.Iterator;
 
 public class GameEngine {
 
     private final OpponentAI ai;
-    private final Scanner scanner;
     private final Presenter presenter;
+    private final Iterator<PlayChoice> ui;
     private PlayChoice lastPlay;
 
-    public GameEngine(Scanner scanner, Presenter presenter) {
-        ai = new OpponentAI();
+    public GameEngine(Presenter presenter, Iterable<PlayChoice> ui) {
+        this(presenter, ui.iterator(), new LastPlayOpponentAI());
+    }
+
+    public GameEngine(Presenter presenter, Iterator<PlayChoice> ui) {
+        this(presenter, ui, new LastPlayOpponentAI());
+    }
+
+    public GameEngine(Presenter presenter, Iterable<PlayChoice> ui, OpponentAI opponentAI) {
+        this(presenter, ui.iterator(), opponentAI);
+    }
+
+    public GameEngine(Presenter presenter, Iterator<PlayChoice> ui, OpponentAI opponentAI) {
+        ai = opponentAI;
         lastPlay = null;
-        this.scanner = scanner;
+        this.ui = ui;
         this.presenter = presenter;
     }
 
@@ -22,10 +34,9 @@ public class GameEngine {
     // 6. reporting results
 
     void run() {
-        while(scanner.hasNext()) {
-            String next = scanner.next();
+        while(ui.hasNext()) {
             try {
-                PlayChoice playChoice = PlayChoice.valueOf(next);
+                PlayChoice playChoice = ui.next();
                 processPlay(playChoice);
             } catch (RuntimeException e) {
                 presenter.reportError();

@@ -33,7 +33,7 @@ public class GameEngineTest {
         Scanner scanner = new Scanner(input);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(byteArrayOutputStream);
-        new GameEngine(scanner, new Presenter(out)).run();
+        new GameEngine(new PrintStreamPresenter(out), new UI(scanner)).run();
         assertEquals(expected, byteArrayOutputStream.toString());
     }
 }

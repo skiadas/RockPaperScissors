@@ -2,7 +2,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        new GameEngine(new Scanner(System.in), new Presenter(System.out)).run();
+        final Scanner scanner = new Scanner(System.in);
+        Presenter presenter = new PrintStreamPresenter(System.out);
+        UI ui = new UI(scanner);
+        GameEngine gameEngine = new GameEngine(presenter, ui);
+        gameEngine.run();
     }
 }
 
